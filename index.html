@@ -1,91 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Transactions - Roblox (Static View)</title>
+    <title>My Transactions - Roblox (Static View, Client-Side Only)</title>
     
     <!-- Essential Meta Tags -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,requiresActiveX=true">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Roblox Corporation">
     
     <!--
-        *** STATIC MODE ACTIVATED ***
-        All dynamic JavaScript/Live scripts and real-time metadata 
-        have been stripped to ensure this screen is non-interactive.
+        *** 100% CLIENT-SIDE ONLY ***
+        All external references (CSS links, image URLs) have been 
+        removed and replaced with inline/embedded styles for complete isolation.
     -->
     
-    <!-- INERT CSS: This rule disables all clicking and interactive feedback on the page. -->
     <style>
+        /* General Interactivity Disabled */
         body {
-            /* Disable mouse events (clicks, hovers) to treat the whole page as a flat image */
             pointer-events: none !important;
-            /* Prevent text selection */
             user-select: none !important; 
             cursor: default !important;
             min-height: 100vh;
-            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        /* Basic Layout Emulation (since external CSS is gone) */
+        .container-fluid { width: 95%; max-width: 1200px; margin: 0 auto; }
+        .stack-row { display: flex; flex-wrap: wrap; }
+        .section-content { flex: 0 0 25%; max-width: 25%; padding-right: 20px; }
+        .transaction-list { flex: 0 0 75%; max-width: 75%; }
+        
+        /* Navigation Styling */
+        .nav { list-style: none; padding: 0; }
+        .nav li { margin-bottom: 5px; }
+        .nav li a { display: block; padding: 8px 10px; background-color: #ffffff; border: 1px solid #ccc; text-decoration: none; color: #333; border-radius: 4px; }
+        .nav li.active a { background-color: #00a2ff; color: white; border-color: #00a2ff; font-weight: bold; }
+
+        /* Transaction List Styling */
+        .section-content-title { margin-top: 0; color: #555; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 15px; background-color: #ffffff; border-radius: 8px; overflow: hidden;}
+        .table th, .table td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+        .table th { background-color: #e9ebee; font-weight: bold; }
+        .table tr:last-child td { border-bottom: none; }
+        .text-right { text-align: right; }
+        .text-danger { color: #cc0000; }
+        .text-success { color: #008744; }
+        
+        /* Responsive fallback for smaller screens */
+        @media (max-width: 768px) {
+            .section-content, .transaction-list { flex: 0 0 100%; max-width: 100%; padding-right: 0; margin-bottom: 20px; }
+            .stack-row { display: block; }
         }
     </style>
 
-    <!-- Original CSS Links are kept to preserve the visual appearance -->
-    <link rel="stylesheet" href="https://css.rbxcdn.com/56f6868ec13cefb471ad86176c7b9642571d05082c86ac6300ddfeb028617d4e.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/775b823f59a8320ea56172866de0ce918df6fc9cbd9db2ceffaa64ac5b771597.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/ce113720f4c1602bb4db7e35d0a4fd637f223e8936fe5779650bda23074663f2.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/d7d4183c8033d692e0ca8ad5222b943fe27879f9a771c9bd9db2ceffaa64ac5b771597.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/b8f8f15a57a66e73469ae72eea7d8905346afa78b9f2397627cd099f7dcc779a.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/66b2fd496e668938e3b0e2d9a0c12f9f88c3a1a4974608f69059d8061fc0141f.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/7efdd6e108c97b0303d8eb08afa31ed9c9b8e90a6e0a37a63f8c00456912fb5b.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/f77e16b9fa5823882aaa0cdabade9706b9ba2b7e050d23d2831da138a58e5f7f.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/b2cff71de0c286e8f85b1a26a8b87a8cd7f77422c592849ad5114ac5d929c575.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/49fff8dad77e5262087267ee2e8fda1607525506c4a1ca20af60f9757684e980.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/9bfc48ea40a698035ea8cbe3d3e94bd06d3aac48969bedceb6d8ba5ff17ff84d.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/60cfeb2f8467bbbf0ca06d8c31e3302be1b43f1f195fa69e6e9f526e4f78dce4.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/03a5c1b93d8909e738d129f5ccafb1d522231b3a03b0a30fc30ed5338a5562ba.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/7e348738266e9ea2bae9314a2d26b33618c6f4cf3c527b11023620d973c6e7fc.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/602cce8e7af3d72b25f82efd5c7c55774ceecf48aecb960489d771066cf92476.css">
-    <link rel="stylesheet" href="https://static.rbxcdn.com/css/leanbase___80400f5d6146e08bcf1e66a17ee0554e_m.css/fetch">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/4f044d03053821338ddd86bed16f51495799dfdf5a4a456fbe64771b47a6f429.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/f57ee051f13e54a366404a2df3512eb4b6d125a3c7c7c9c6b59482c0a8b2bed0.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/0177970da14deacec24118ac6b4600c5c32779396f06bd9c9c792159897f43d7.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/7dfc7837b5da6850e13413c630b37da7e88aeb610ca2c7d4e8b71b02cbdc6ba6.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/3c4bd9b17b9020d9ebc87d4542a68a949a9de6150a55a92f0e65514520ee777e.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/95a756316bbf688273d0aae66884901f56b2b42314831ba2bf3546bbbefd0b8c.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/3bca47a98d58fdf98a7063c4f3b390671e5326ed559813887f3945876c997da6.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/d45e200658a1343116bbf4a88c367d093758085e7d001918d641c85b2143468f.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/f9d2f895b2831ce29f0c3801ecc38444860855013c5701e3bce5867cddd859fd.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/8017fdebb384b8c3089e518e73718336ebbbc94afffd0d25779114649a544682.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/70fe33400ccae17716977f7c372f81c211644c8c39cd1091ca4aee6d1db28fe8.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/32b8b95a9d58e77c57932e9237eed2c4e75a4d563027e58601e051d3387682ce.css">
-    <link rel="stylesheet" href="https://css.rbxcdn.com/d5a3728b78be729b693aadf79a1f45f0fa49c15fe863a0d7dd631b75f9e82207.css">
-
 </head>
-<body id="ctl00_body" class="transactions-page no-touch" data-gacategory="transactions">
-
-    <!-- 
-        Insert the original <body> content here. 
-        It will appear exactly as it did before, but now completely static and non-interactive.
-    -->
+<body id="ctl00_body" class="transactions-page" data-gacategory="transactions">
 
     <div id="ctl00_PageContentContainer">
-        <!-- Content placeholder: Replace this comment with the actual visible body content -->
         <div class="container-fluid">
             <div id="transactions-container" class="stack-row">
-                <div class="col-xs-12 col-sm-3 section-content">
+                <!-- Left Navigation Panel -->
+                <div class="section-content">
                     <ul class="nav">
-                        <li class="active"><a href="/transactions">My Transactions</a></li>
-                        <li><a href="/transactions/summary">Summary</a></li>
-                        <li><a href="/transactions/sales">Sales</a></li>
-                        <li><a href="/transactions/purchases">Purchases</a></li>
-                        <li><a href="/transactions/promocodes">Promocodes</a></li>
+                        <li class="active"><a href="#">My Transactions</a></li>
+                        <li><a href="#">Summary</a></li>
+                        <li><a href="#">Sales</a></li>
+                        <li><a href="#">Purchases</a></li>
+                        <li><a href="#">Promocodes</a></li>
                     </ul>
                 </div>
-                <div class="col-xs-12 col-sm-9 transaction-list">
+                
+                <!-- Right Transaction List -->
+                <div class="transaction-list">
                     <h3 class="section-content-title">My Transactions</h3>
                     <div id="transactions-list-container">
-                        <div class="text-center">
-                            <div class="spinner spinner-large" style="display: none;"></div>
-                            <p class="no-data-text" style="display: block;">No transactions found for this period.</p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Transaction 1 (Purchase) -->
+                                <tr class="purchase-transaction">
+                                    <td>2025-11-08</td>
+                                    <td>Purchased "Galactic Trooper Helmet" from Avatar Shop</td>
+                                    <td class="text-right">
+                                        <span class="currency-font">
+                                            <!-- Embedded SVG Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align: middle; margin-right: 4px;">
+                                                <circle cx="9" cy="9" r="9" fill="#ffb400"/>
+                                            </svg>
+                                            <span class="text-danger">-500</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!-- Transaction 2 (Sale) -->
+                                <tr class="sale-transaction">
+                                    <td>2025-11-08</td>
+                                    <td>Sold "Mega Fun Obby Pass" to User123</td>
+                                    <td class="text-right">
+                                        <span class="currency-font">
+                                            <!-- Embedded SVG Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align: middle; margin-right: 4px;">
+                                                <circle cx="9" cy="9" r="9" fill="#ffb400"/>
+                                            </svg>
+                                            <span class="text-success">+70</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!-- Transaction 3 (Group Payout) -->
+                                <tr class="group-payout">
+                                    <td>2025-11-07</td>
+                                    <td>Group Payout: "Awesome Builders Club"</td>
+                                    <td class="text-right">
+                                        <span class="currency-font">
+                                            <!-- Embedded SVG Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align: middle; margin-right: 4px;">
+                                                <circle cx="9" cy="9" r="9" fill="#ffb400"/>
+                                            </svg>
+                                            <span class="text-success">+1200</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!-- Transaction 4 (Purchase) -->
+                                <tr class="purchase-transaction">
+                                    <td>2025-11-06</td>
+                                    <td>Purchased 1-Month Premium Subscription</td>
+                                    <td class="text-right">
+                                        <span class="currency-font">
+                                            <!-- Embedded SVG Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align: middle; margin-right: 4px;">
+                                                <circle cx="9" cy="9" r="9" fill="#ffb400"/>
+                                            </svg>
+                                            <span class="text-danger">-450</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!-- Transaction 5 (Sale) -->
+                                <tr class="sale-transaction">
+                                    <td>2025-11-06</td>
+                                    <td>Sold "Laser Sword" in "Space Battles" Gamepass</td>
+                                    <td class="text-right">
+                                        <span class="currency-font">
+                                            <!-- Embedded SVG Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align: middle; margin-right: 4px;">
+                                                <circle cx="9" cy="9" r="9" fill="#ffb400"/>
+                                            </svg>
+                                            <span class="text-success">+25</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <!-- Transaction 6 (Other) -->
+                                <tr class="other-transaction">
+                                    <td>2025-11-05</td>
+                                    <td>Developer Exchange (DevEx) - Withheld Tax</td>
+                                    <td class="text-right">
+                                        <span class="currency-font">
+                                            <!-- Embedded SVG Icon -->
+                                            <svg width="18" height="18" viewBox="0 0 18 18" style="vertical-align: middle; margin-right: 4px;">
+                                                <circle cx="9" cy="9" r="9" fill="#ffb400"/>
+                                            </svg>
+                                            <span class="text-danger">-10</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <!-- Paging (Static text) -->
+                        <div class="paging-container" style="text-align: center; margin-top: 20px;">
+                            <ul class="pager" style="list-style: none; padding: 0;">
+                                <li class="previous disabled" style="display: inline; margin-right: 15px; color: #aaa;">&lt; Previous</li>
+                                <li class="current" style="display: inline; font-weight: bold;">Page 1 of 1</li>
+                                <li class="next disabled" style="display: inline; margin-left: 15px; color: #aaa;">Next &gt;</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
