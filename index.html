@@ -15,10 +15,13 @@
         removed and replaced with inline/embedded styles for complete isolation.
     -->
     
+    <!-- External Library for HTML to Canvas conversion - Required for client-side screenshot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
-        /* General Interactivity Disabled */
+        /* General Interactivity Disabled - APPLIED ONLY TO BODY TO MAKE CONTENT LOOK STATIC */
         body {
-            pointer-events: none !important;
+            /* We need to re-enable pointer-events for the screenshot button */
             user-select: none !important; 
             cursor: default !important;
             min-height: 100vh;
@@ -26,6 +29,13 @@
             margin: 0;
             padding: 20px;
             background-color: #f0f2f5;
+        }
+        
+        /* Re-enable interaction only for the screenshot section */
+        #screenshot-section * {
+            pointer-events: auto !important;
+            user-select: auto !important;
+            cursor: pointer !important;
         }
 
         /* Basic Layout Emulation (since external CSS is gone) */
@@ -50,6 +60,22 @@
         .text-danger { color: #cc0000; }
         .text-success { color: #008744; }
         
+        /* Screenshot Button Styling */
+        #screenshot-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        #screenshot-button:hover {
+            background-color: #45a049;
+        }
+
         /* Responsive fallback for smaller screens */
         @media (max-width: 768px) {
             .section-content, .transaction-list { flex: 0 0 100%; max-width: 100%; padding-right: 0; margin-bottom: 20px; }
@@ -62,7 +88,13 @@
 
     <div id="ctl00_PageContentContainer">
         <div class="container-fluid">
-            <div id="transactions-container" class="stack-row">
+            <!-- Screenshot Section -->
+            <div id="screenshot-section" style="margin-bottom: 20px; text-align: right;">
+                <button id="screenshot-button">Download Screenshot (PNG)</button>
+            </div>
+
+            <!-- Content Container (The element we want to capture) -->
+            <div id="capture-target" class="stack-row">
                 <!-- Left Navigation Panel -->
                 <div class="section-content">
                     <ul class="nav">
@@ -187,5 +219,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to take and download the screenshot
+        document.getElementById('screenshot-button').addEventListener('click', function() {
+            // Target the entire content container to ensure we get the full layout
+            const captureElement = document.getElementById('capture-target');
+
+            // Use html2canvas to render the DOM element to a canvas
+            html2canvas(captureElement, {
+                // Ensure the background color is captured correctly (important since we set it in CSS)
+                backgroundColor: '#f0f2f5', 
+                // Don't log internal issues to the console
+                logging: false, 
+                // Scale up the image for better resolution (e.g., 2x)
+                scale: 2 
+            }).then(function(canvas) {
+                // Convert the canvas content to a data URL (PNG format)
+                const image = canvas.toDataURL('image/png');
+                
+                // Create a temporary link element for downloading the image
+                const a = document.createElement('a');
+                a.href = image;
+                a.download = 'Roblox_Transactions_Screenshot.png';
+                
+                // Programmatically click the link to trigger the download
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+        });
+    </script>
 </body>
 </html>
